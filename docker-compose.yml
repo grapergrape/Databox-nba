@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+    databox-service:
+        hostname: databox-service
+        container_name: databox-service
+        build: .
+        network_mode: host
+        env_file:
+            - .env
