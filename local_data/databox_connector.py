@@ -157,6 +157,7 @@ class DataboxFeed:
         """
         df = df.astype({
             'commits': float,
+            'repository': str,
             'date': str
         })
         for _, row in df.iterrows():

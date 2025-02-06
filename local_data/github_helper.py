@@ -43,6 +43,7 @@ class GitHubFetcher:
         df = pd.DataFrame(commit_dates, columns=['date'])
         df['count'] = 1
         df = df.groupby('date').count().reset_index()
+        df['repository'] = self.repo_name
         return df
 
 if __name__ == '__main__':
