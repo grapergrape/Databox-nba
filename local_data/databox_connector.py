@@ -48,7 +48,7 @@ class DataboxFeed:
         self.api_client = databox.ApiClient(configuration, "Accept", "application/vnd.databox.v2+json")
         self.api_instance = databox.DefaultApi(self.api_client)
 
-    def send_data(self, df: pd.DataFrame) -> None:
+    def send_data_nba(self, df: pd.DataFrame) -> None:
         """
         Sends data from a DataFrame to Databox.
 
@@ -131,6 +131,47 @@ class DataboxFeed:
                 }
             ]
 
+            try:
+                self.api_instance.data_post(push_data=push_data)
+                logging.info(f"Successfully pushed data for date: {data_dict['date']}")
+            except ApiException as e:
+                logging.error(f"API Exception occurred: {e}")
+            except Exception as e:
+                logging.error(f"An unexpected error occurred: {e}")
+
+    def send_data_github(self, df: pd.DataFrame) -> None:
+        """
+        Sends data from a DataFrame to Databox.
+
+        Parameters
+        ----------
+        df : pd.DataFrame
+            A DataFrame containing the data with columns: date, commits, additions, deletions, changed_files, repository.
+
+        Raises
+        ------
+        ApiException
+            If there is an error in sending data to Databox.
+        Exception
+            For any unexpected errors.
+        """
+        df = df.astype({
+            'commits': float,
+            'date': str
+        })
+        for _, row in df.iterrows():
+            data_dict = row.to_dict()
+            push_data = [
+                {
+                    "key": "commits",
+                    "value": data_dict['commits'],
+                    "date": data_dict['date'],
+                    "attributes": [
+                        {"key": "repository", "value": data_dict['repository']}
+                    ]
+                }
+            ]
+        
             try:
                 self.api_instance.data_post(push_data=push_data)
                 logging.info(f"Successfully pushed data for date: {data_dict['date']}")

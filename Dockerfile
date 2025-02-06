@@ -18,8 +18,8 @@ WORKDIR /databox-service
 RUN pip3 install -r requirements.txt
 COPY ./local_data/* /databox-service/
 ENV PYTHONPATH $PYTHONPATH:/workdir
-#CMD ["python3", "main.py"]
+CMD ["python3", "github_connector.py"]
 
 
 # for tests run
-CMD ["sh", "-c", "coverage run test_runner.py && coverage report -m && coverage html -d /databox-service/coverage_report"]
+#CMD ["sh", "-c", "coverage run test_runner.py && coverage report -m && coverage html -d /databox-service/coverage_report"]

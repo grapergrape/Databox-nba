@@ -4,7 +4,6 @@ import pandas as pd
 import os
 from databox import ApiException
 
-from nba_helper import StatsFetcher
 from databox_connector import DataboxFeed  
 
 class TestDataboxFeed(unittest.TestCase):
