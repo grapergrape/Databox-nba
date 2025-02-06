@@ -62,11 +62,7 @@ class StatsFetcher:
             # Calculate FG% and TS%
             game_logs['FG%'] = game_logs['FGM'] / game_logs['FGA']
             game_logs['TS%'] = game_logs.apply(lambda row: self._calculate_ts(row['PTS'], row['FGA'], row['FTA']), axis=1)
-
-            # Extract opposing team from the matchup string
             game_logs['opposing_team'] = game_logs['MATCHUP'].apply(lambda x: x.split()[-1] if 'vs.' in x else x.split()[-1])
-
-            # Add the season information
             game_logs['season'] = season
 
             # Select and rename columns

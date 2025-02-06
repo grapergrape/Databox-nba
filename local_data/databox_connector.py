@@ -1,10 +1,13 @@
 import os
 import pandas as pd
+import logging
+
 from dotenv import load_dotenv
+
 import databox
 from databox.rest import ApiException
-import logging
-from typing import Dict, Any
+
+
 
 load_dotenv()  # Load environment variables from a .env file
 
@@ -129,11 +132,9 @@ class DataboxFeed:
             ]
 
             try:
-                print(push_data)
                 self.api_instance.data_post(push_data=push_data)
                 logging.info(f"Successfully pushed data for date: {data_dict['date']}")
             except ApiException as e:
                 logging.error(f"API Exception occurred: {e}")
             except Exception as e:
                 logging.error(f"An unexpected error occurred: {e}")
-            exit(1)

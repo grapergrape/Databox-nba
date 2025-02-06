@@ -1,10 +1,13 @@
 version: '3'
 
 services:
-    databox-service:
-        hostname: databox-service
-        container_name: databox-service
-        build: .
-        network_mode: host
-        env_file:
-            - .env
+  databox-service:
+    hostname: databox-service
+    container_name: databox-service
+    build: .
+    network_mode: host
+    env_file:
+      - .env
+    volumes:
+      - ./local_data:/databox-service/local_data/tests
+      - ./coverage_report:/databox-service/coverage_report  
