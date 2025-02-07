@@ -11,6 +11,7 @@ RUN apt-get update && \
 RUN mkdir /databox-service
 WORKDIR /databox-service
 COPY ./requirements.txt /databox-service/requirements.txt
+# add databox library (why not make it a pypl package?)
 RUN git clone https://github.com/databox/databox-python.git /databox-service/databox-python
 WORKDIR /databox-service/databox-python/src
 RUN pip3 install .

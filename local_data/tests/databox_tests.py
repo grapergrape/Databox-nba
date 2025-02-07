@@ -4,7 +4,7 @@ import pandas as pd
 import os
 from databox import ApiException
 
-from databox_connector import DataboxFeed  
+from databox_connector import DataboxFeed
 
 class TestDataboxFeed(unittest.TestCase):
 
@@ -36,7 +36,7 @@ class TestDataboxFeed(unittest.TestCase):
             'season': ['2025']
         }
         df = pd.DataFrame(data)
-        self.databox_feed.send_data(df)
+        self.databox_feed.send_data_nba(df)
         self.mock_api_instance.data_post.assert_called_once()
 
     def test_send_data_api_exception(self):
@@ -53,9 +53,30 @@ class TestDataboxFeed(unittest.TestCase):
             'season': ['2025']
         }
         df = pd.DataFrame(data)
-        self.databox_feed.send_data(df)
+        self.databox_feed.send_data_nba(df)
+        self.mock_api_instance.data_post.assert_called_once()
+
+    def test_send_data_github_success(self):
+        self.mock_api_instance.data_post.return_value = None
+        data = {
+            'date': ['2025-02-06'],
+            'count': [10],
+            'repository': ['repo1']
+        }
+        df = pd.DataFrame(data)
+        self.databox_feed.send_data_github(df)
+        self.mock_api_instance.data_post.assert_called_once()
+
+    def test_send_data_github_api_exception(self):
+        self.mock_api_instance.data_post.side_effect = ApiException("API Error")
+        data = {
+            'date': ['2025-02-06'],
+            'count': [10],
+            'repository': ['repo1']
+        }
+        df = pd.DataFrame(data)
+        self.databox_feed.send_data_github(df)
         self.mock_api_instance.data_post.assert_called_once()
 
 if __name__ == '__main__':
     unittest.main()
-
