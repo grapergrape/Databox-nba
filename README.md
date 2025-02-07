@@ -25,7 +25,7 @@ This project fetches NBA player statistics and GitHub commit data, then pushes t
    - To run coverage tests, modify the `Dockerfile`:
      - Comment out: `CMD ["python3", "main.py"]`
      - Uncomment: `CMD ["sh", "-c", "coverage run test_runner.py && coverage report -m && coverage html -d /databox-service/coverage_report"]`
-   - This generates a coverage report in the `coverage_report` directory.
+   - This generates a coverage report in the `coverage_report` directory, if the command fails: create empty directroy called coverage_report in projects root dir.
 
 ## Docker Setup
 
