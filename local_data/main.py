@@ -6,6 +6,13 @@ from github_helper import GitHubFetcher
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+"""
+Main script that does nothing but combines all scripts. 
+Workflow:
+---------
+
+Initializes the StatsFetcher and GitHubFetcher classes, fetches the data, and sends it to Databox.
+"""
 
 if __name__ == '__main__':
     logging.info("Started data export to Databox.")

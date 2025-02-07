@@ -30,8 +30,15 @@ class StatsFetcher:
         """
         Retrieves a player's ID using their full name.
 
-        :param player_name: Full name of the player.
-        :return: Player ID.
+        Parameters
+        ----------
+        player_name : str
+            The full name of the player.
+        
+        Returns
+        -------
+        int
+            The player's ID.
         """
         player = players.find_players_by_full_name(player_name)[0]
         return player['id']
@@ -40,10 +47,19 @@ class StatsFetcher:
         """
         Calculates the True Shooting Percentage (TS%) for given points, field goal attempts, and free throw attempts.
 
-        :param pts: Total points scored.
-        :param fga: Field goal attempts.
-        :param fta: Free throw attempts.
-        :return: True Shooting Percentage.
+        Parameters
+        ----------
+        pts : int
+            The total points scored.
+        fga : int
+            The total field goal attempts.
+        fta : int   
+            The total free throw attempts.
+
+        Returns
+        -------
+        float
+            The True Shooting Percentage (TS%).
         """
         return pts / (2 * (fga + 0.44 * fta)) if fga + 0.44 * fta > 0 else 0.0
 
@@ -51,7 +67,14 @@ class StatsFetcher:
         """
         Fetches Luka Dončić's game stats for each game from 2018-19 to 2023-24.
 
-        :return: DataFrame with columns: Date, Points, Rebounds, Assists, Minutes, FG%, TS%, Opposing Team, Season.
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        pd.DataFrame
+            DataFrame with columns: date, points, rebounds, assists, minutes, fg_pct, ts_pct, opposing_team, season.
         """
         all_game_stats: List[pd.DataFrame] = []
 
@@ -78,8 +101,15 @@ class StatsFetcher:
         Standardizes the date format in the DataFrame to ISO format (YYYY-MM-DD).
         Used because API returns non-standard date format: OCT 31, 2024 etc.
 
-        :param df: DataFrame with a 'date' column.
-        :return: DataFrame with standardized date format.
+        Parameters
+        ----------
+        df : pd.DataFrame
+            DataFrame with a date column in non-standard format.
+
+        Returns
+        -------
+        pd.DataFrame
+            DataFrame with date column in ISO format.
         """
         df['date'] = pd.to_datetime(df['date']).dt.strftime('%Y-%m-%d')
         return df
@@ -89,8 +119,15 @@ class StatsFetcher:
         Reduces the precision of float columns in the DataFrame to 3 decimal places.
         Databox supports up to 6 decimal places for float values.
 
-        :param df: DataFrame with float columns.
-        :return: DataFrame with reduced float precision.
+        Parameters
+        ----------
+        df : pd.DataFrame
+            DataFrame with float columns.
+        
+        Returns
+        -------
+        pd.DataFrame
+            DataFrame with float columns rounded to 3 decimal places
         """
         float_cols = df.select_dtypes(include=['float']).columns
         df[float_cols] = df[float_cols].round(3)
