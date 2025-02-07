@@ -138,6 +138,47 @@ class DataboxFeed:
                 logging.error(f"API Exception occurred: {e}")
             except Exception as e:
                 logging.error(f"An unexpected error occurred: {e}")
+            # non dimensional data
+            push_data = [
+                {
+                    "key": "points",
+                    "value": data_dict['points'],
+                    "date": data_dict['date']
+                },
+                {
+                    "key": "rebounds",
+                    "value": data_dict['rebounds'],
+                    "date": data_dict['date']
+                },
+                {
+                    "key": "assists",
+                    "value": data_dict['assists'],
+                    "date": data_dict['date']
+                },
+                {
+                    "key": "minutes",
+                    "value": data_dict['minutes'],
+                    "date": data_dict['date']
+                },
+                {
+                    "key": "fg_pct",
+                    "value": data_dict['fg_pct'],
+                    "date": data_dict['date']
+                },
+                {
+                    "key": "ts_pct",
+                    "value": data_dict['ts_pct'],
+                    "date": data_dict['date'],
+                }
+            ]
+
+            try:
+                self.api_instance.data_post(push_data=push_data)
+                logging.info(f"Successfully pushed data for date: {data_dict['date']}")
+            except ApiException as e:
+                logging.error(f"API Exception occurred: {e}")
+            except Exception as e:
+                logging.error(f"An unexpected error occurred: {e}")
 
     def send_data_github(self, df: pd.DataFrame) -> None:
         """
