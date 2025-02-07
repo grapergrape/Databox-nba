@@ -6,7 +6,7 @@ This project fetches NBA player statistics and GitHub commit data, then pushes t
 
 - **NBA API Fetcher**: Retrieves basic statistics for Luka Dončić from a public NBA API.
 - **GitHub Commit Fetcher**: Gathers daily commit data for this specific project using GitHub's API key authorization. If OAuth is used, details are provided in the documentation.
-- **Databox Integration**: Displays the fetched NBA stats and commit data on a Databox dashboard. Access it [here](https://app.databox.com/datawall/4bbfb0483949287855f6bd65405742713c71a8467a251d1).
+- **Databox Integration**: Displays the fetched NBA stats and commit data on a Databox dashboard. Access it [here](https://app.databox.com/datawall/4bbfb0483949287855f6bd65405742713c71a8467a251d1). Databox user was created through Google signup: gasper.skornik@gmail.com
 
 ## Setup & Usage
 
