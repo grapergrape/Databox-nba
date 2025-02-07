@@ -18,7 +18,7 @@ WORKDIR /databox-service
 RUN pip3 install -r requirements.txt
 COPY ./local_data/* /databox-service/
 ENV PYTHONPATH $PYTHONPATH:/workdir
-CMD ["python3", "github_connector.py"]
+CMD ["python3", "main.py"]
 
 
 # for tests run

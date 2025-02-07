@@ -9,17 +9,17 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 
 class GitHubFetcher:
-    def __init__(self, repo_owner, repo_name):
+    def __init__(self):
         load_dotenv()
         self.github_token = os.getenv('GITHUB_TOKEN')
-        self.repo_owner = repo_owner
-        self.repo_name = repo_name
-        self.api_url = f'https://api.github.com/repos/{repo_owner}/{repo_name}/commits'
+        self.repo_owner = 'grapergrape' 
+        self.repo_name = 'Databox-nba'
+        self.api_url = f'https://api.github.com/repos/{self.repo_owner}/{self.repo_name}/commits'
         self.headers = {
             'Authorization': f'token {self.github_token}'
         }
 
-    def fetch_all_commits(self):
+    def fetch_data(self):
         logging.info(f"Fetching all commits for {self.repo_name} repository.")
         commit_dates = []
         response = requests.get(self.api_url, headers=self.headers)
@@ -45,9 +45,14 @@ class GitHubFetcher:
         df = df.groupby('date').count().reset_index()
         df['repository'] = self.repo_name
         return df
+    
+    def fetch_all_commits(self):
+        commit_dates = self.fetch_data()
+        df = self.create_dataframe(commit_dates)
+        return df
 
 if __name__ == '__main__':
     analyzer = GitHubFetcher('grapergrape', 'Databox-nba')
-    commit_dates = analyzer.fetch_all_commits()
+    commit_dates = analyzer.fetch_data()
     df = analyzer.create_dataframe(commit_dates)
     print(df)

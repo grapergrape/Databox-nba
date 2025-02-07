@@ -58,14 +58,11 @@ class StatsFetcher:
         for season in self.seasons:
             logging.info(f"Fetching game stats for Luka Dončić for season {season}")
             game_logs = playergamelog.PlayerGameLog(player_id=self.player_id, season=season).get_data_frames()[0]
-
-            # Calculate FG% and TS%
             game_logs['FG%'] = game_logs['FGM'] / game_logs['FGA']
             game_logs['TS%'] = game_logs.apply(lambda row: self._calculate_ts(row['PTS'], row['FGA'], row['FTA']), axis=1)
             game_logs['opposing_team'] = game_logs['MATCHUP'].apply(lambda x: x.split()[-1] if 'vs.' in x else x.split()[-1])
             game_logs['season'] = season
 
-            # Select and rename columns
             game_logs = game_logs[['GAME_DATE', 'PTS', 'REB', 'AST', 'MIN', 'FG%', 'TS%', 'opposing_team', 'season']]
             game_logs.columns = ['date', 'points', 'rebounds', 'assists', 'minutes', 'fg_pct', 'ts_pct', 'opposing_team', 'season']
 

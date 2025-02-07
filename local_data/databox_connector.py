@@ -156,7 +156,7 @@ class DataboxFeed:
             For any unexpected errors.
         """
         df = df.astype({
-            'commits': float,
+            'count': float,
             'repository': str,
             'date': str
         })
@@ -165,7 +165,7 @@ class DataboxFeed:
             push_data = [
                 {
                     "key": "commits",
-                    "value": data_dict['commits'],
+                    "value": data_dict['count'],
                     "date": data_dict['date'],
                     "attributes": [
                         {"key": "repository", "value": data_dict['repository']}
